@@ -1,0 +1,8 @@
+{
+  "name": "Remix: Setabgonj-Online-Home-Delivery-Platform",
+  "description": "Premium handcrafted organic henna, bridal art, floral jewelry, and custom tailoring services.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

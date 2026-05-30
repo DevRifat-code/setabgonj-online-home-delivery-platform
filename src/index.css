@@ -1,0 +1,188 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+@import "tailwindcss";
+
+:root {
+  --emerald-deep: #044A22;
+  --rose-gold: #B76E79;
+  --copper: #B87333;
+  --soft-white: #FBFBFB;
+  --warm-beige: #F5F2ED;
+}
+
+.dark {
+  --emerald-deep: #ECFDF5;
+  --rose-gold: #E2A2AC;
+  --copper: #FBBF24;
+  --soft-white: #040B07;
+  --warm-beige: #0C1710;
+}
+
+@theme {
+  --font-serif: "Outfit", sans-serif;
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+  
+  --color-emerald-deep: var(--emerald-deep);
+  --color-rose-gold: var(--rose-gold);
+  --color-copper: var(--copper);
+  --color-soft-white: var(--soft-white);
+  --color-warm-beige: var(--warm-beige);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    position: relative;
+  }
+  body {
+    @apply bg-soft-white text-emerald-deep font-sans selection:bg-rose-gold/30 transition-colors duration-500 relative;
+  }
+  #root {
+    position: relative;
+  }
+}
+
+/* Enable smooth transitions for theme switches across elements styles */
+html,
+body,
+header,
+footer,
+nav,
+section,
+div,
+p,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a,
+button,
+input,
+select,
+textarea,
+svg {
+  transition-property: color, background-color, border-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 500ms;
+}
+
+.glass {
+  @apply bg-white/70 backdrop-blur-md border border-white/20 transition-all duration-500;
+}
+
+/* -----------------------------------------
+   Dark Mode Overrides - Absolute Precision
+----------------------------------------- */
+
+/* Override primary body background & text colors */
+.dark body {
+  background-color: #040F08 !important;
+  color: #ECFDF5 !important;
+}
+
+/* Ensure background of containers and sections shift gracefully */
+.dark .bg-soft-white {
+  background-color: #040F08 !important;
+}
+
+.dark .bg-warm-beige {
+  background-color: #0C1711 !important;
+}
+
+/* Transform white components/cards into sleek dark forest green cards with fine borders */
+.dark .bg-white {
+  background-color: #102116 !important;
+  color: #ECFDF5 !important;
+}
+
+/* Overwrite borders for modern look in dark mode */
+.dark .border,
+.dark .border-emerald-deep\/5,
+.dark .border-emerald-deep\/10 {
+  border-color: rgba(236, 253, 245, 0.08) !important;
+}
+
+/* Filled Action Buttons in Dark Mode: keep high-contrast white text on dark green backgrounds */
+.dark .bg-emerald-deep {
+  background-color: #044A22 !important;
+  color: #ffffff !important;
+}
+
+.dark .bg-emerald-deep:hover {
+  background-color: #055E2B !important;
+}
+
+/* Inverted White Buttons (e.g. Order Now) inside product/service cards */
+.dark .bg-white.text-emerald-deep {
+  background-color: #044A22 !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark .bg-white.text-emerald-deep:hover {
+  background-color: #055E2B !important;
+}
+
+/* Floating Glass Overlay (Navbars, overlays, drawers) */
+.dark .glass {
+  background-color: rgba(12, 23, 17, 0.75) !important;
+  border-color: rgba(236, 253, 245, 0.08) !important;
+}
+
+/* Elegant Text Color Maps (In case Tailwind class resolves to old hexes, force them) */
+.dark .text-emerald-deep {
+  color: #ECFDF5 !important;
+}
+.dark .text-emerald-deep\/80 { color: rgba(236, 253, 245, 0.8) !important; }
+.dark .text-emerald-deep\/70 { color: rgba(236, 253, 245, 0.7) !important; }
+.dark .text-emerald-deep\/60 { color: rgba(236, 253, 245, 0.6) !important; }
+.dark .text-emerald-deep\/50 { color: rgba(236, 253, 245, 0.5) !important; }
+.dark .text-emerald-deep\/40 { color: rgba(236, 253, 245, 0.4) !important; }
+.dark .text-emerald-deep\/30 { color: rgba(236, 253, 245, 0.3) !important; }
+.dark .text-emerald-deep\/20 { color: rgba(236, 253, 245, 0.2) !important; }
+.dark .text-emerald-deep\/10 { color: rgba(236, 253, 245, 0.1) !important; }
+
+/* Modal and text area forms */
+.dark input, 
+.dark select, 
+.dark textarea {
+  background-color: #152A1E !important;
+  border: 1px solid rgba(236, 253, 245, 0.1) !important;
+  color: #ECFDF5 !important;
+}
+
+.dark input::placeholder, 
+.dark textarea::placeholder {
+  color: rgba(236, 253, 245, 0.4) !important;
+}
+
+/* Overlay elements */
+.dark .bg-white\/50 { background-color: rgba(16, 33, 22, 0.5) !important; }
+.dark .bg-white\/70 { background-color: rgba(16, 33, 22, 0.7) !important; }
+.dark .bg-white\/80 { background-color: rgba(16, 33, 22, 0.8) !important; }
+.dark .bg-white\/90 { background-color: rgba(16, 33, 22, 0.9) !important; }
+.dark .bg-white\/95 { background-color: rgba(16, 33, 22, 0.95) !important; }
+
+/* Admin and logs pre-blocks */
+.dark pre {
+  background-color: #102116 !important;
+  border-color: rgba(52, 211, 153, 0.15) !important;
+  color: #A7F3D0 !important;
+}
+
+/* Modals wrapper container background dimming */
+.dark .bg-emerald-deep\/40 {
+  background-color: rgba(4, 15, 8, 0.6) !important;
+}
+
+/* Hover transitions inside lists */
+.dark .hover\:bg-emerald-deep\/5:hover {
+  background-color: rgba(236, 253, 245, 0.04) !important;
+}
+
+.text-stroke {
+  -webkit-text-stroke: 1px currentColor;
+  color: transparent;
+}
