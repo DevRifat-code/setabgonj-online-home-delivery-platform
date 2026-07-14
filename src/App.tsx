@@ -439,6 +439,7 @@ export default function App() {
         socialInstagram={siteConfig.social_instagram}
         socialFacebook={siteConfig.social_facebook}
         contactEmail={siteConfig.contact_email}
+        contactPhone={siteConfig.contact_phone}
       />
 
       {(() => {
