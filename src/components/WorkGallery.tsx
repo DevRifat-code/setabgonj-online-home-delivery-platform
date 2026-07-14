@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { getSupabase } from '../lib/supabase';
 import { useLanguage } from '../lib/LanguageContext';
 import Lightbox from './Lightbox';
+import LazyImage from './LazyImage';
 
 const DEFAULT_IMAGES = [
   '/assets/images/bridal_art_card_1778986446990.png',
@@ -62,11 +63,10 @@ export default function WorkGallery() {
                 setIsLightboxOpen(true);
               }}
             >
-              <img 
+              <LazyImage 
                 src={img} 
                 alt={`Work ${index + 1}`} 
                 loading="lazy"
-                referrerPolicy="no-referrer"
                 className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500 flex items-center justify-center" />

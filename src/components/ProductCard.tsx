@@ -1,7 +1,8 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ZoomIn } from 'lucide-react';
 import { useLanguage } from '../lib/LanguageContext';
+import LazyImage from './LazyImage';
 
 interface ProductCardProps {
   title: string;
@@ -12,9 +13,10 @@ interface ProductCardProps {
   price?: string;
   type?: string;
   key?: string | number;
+  onZoom?: () => void;
 }
 
-export default function ProductCard({ title, category, image, onOrder, index, price, type }: ProductCardProps) {
+export default function ProductCard({ title, category, image, onOrder, index, price, type, onZoom }: ProductCardProps) {
   const { t } = useLanguage();
 
   return (
@@ -27,8 +29,11 @@ export default function ProductCard({ title, category, image, onOrder, index, pr
       whileHover="hover"
       whileFocus="hover"
     >
-      <div className="aspect-[3/4] overflow-hidden rounded-[2rem] bg-warm-beige relative group">
-        <motion.img
+      <div 
+        className="aspect-[3/4] overflow-hidden rounded-[2rem] bg-warm-beige relative group cursor-pointer"
+        onClick={onZoom}
+      >
+        <LazyImage
           src={image}
           alt={`Image for ${title}`}
           className="w-full h-full object-cover"
@@ -37,6 +42,23 @@ export default function ProductCard({ title, category, image, onOrder, index, pr
           }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         />
+
+        {/* Premium Zoom Button Badge */}
+        {onZoom && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onZoom();
+            }}
+            className="absolute top-4 right-4 z-20 w-11 h-11 rounded-full bg-white/90 backdrop-blur-md text-emerald-deep hover:text-rose-gold shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 focus:outline-none cursor-pointer border border-white/20"
+            title="Zoom image (বড় করে দেখুন)"
+            aria-label={`Zoom ${title} image`}
+            id={`zoom-btn-${index}`}
+          >
+            <ZoomIn size={18} />
+          </button>
+        )}
+
         <motion.div 
           className="absolute inset-0 bg-black/10 transition-colors duration-500"
           variants={{
@@ -46,6 +68,7 @@ export default function ProductCard({ title, category, image, onOrder, index, pr
         
         <div 
           className="absolute bottom-0 left-0 right-0 p-6 md:p-8 transition-all duration-300 opacity-100 translate-y-0 md:opacity-0 md:translate-y-4 md:group-hover:opacity-100 md:group-hover:translate-y-0"
+          onClick={(e) => e.stopPropagation()}
         >
           <motion.button
             whileHover={{ scale: 1.02 }}

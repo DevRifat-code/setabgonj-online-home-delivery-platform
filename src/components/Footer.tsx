@@ -7,9 +7,21 @@ interface FooterProps {
   siteName?: string;
   logoUrl?: string;
   setView?: (view: 'home' | 'account' | 'privacy' | 'terms') => void;
+  socialInstagram?: string;
+  socialFacebook?: string;
+  contactEmail?: string;
+  contactPhone?: string;
 }
 
-export default function Footer({ siteName, logoUrl, setView }: FooterProps) {
+export default function Footer({ 
+  siteName, 
+  logoUrl, 
+  setView,
+  socialInstagram,
+  socialFacebook,
+  contactEmail,
+  contactPhone
+}: FooterProps) {
   const [imageError, setImageError] = useState(false);
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
@@ -33,21 +45,29 @@ export default function Footer({ siteName, logoUrl, setView }: FooterProps) {
   };
 
   return (
-    <footer className="relative bg-emerald-deep text-white overflow-hidden pt-24 pb-12 px-6 lg:px-12 border-t border-rose-gold/20 font-sans">
-      {/* Decorative subtle ambient lights */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-rose-gold/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 right-10 w-80 h-80 bg-white/5 rounded-full blur-[100px] pointer-events-none" />
+    <footer className="relative bg-gradient-to-b from-[#02210E] via-[#044A22] to-[#011408] text-white overflow-hidden pt-36 pb-12 px-6 lg:px-12 border-t border-rose-gold/30 font-sans shadow-[0_-15px_40px_rgba(4,74,34,0.15)]">
+      {/* Decorative Wavy Divider */}
+      <div className="absolute top-0 left-0 right-0 w-full overflow-hidden leading-[0] transform rotate-180">
+        <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-full h-12 text-soft-white dark:text-[#040B07] fill-current">
+          <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,42.4V0Z"></path>
+        </svg>
+      </div>
+
+      {/* Premium Decorative subtle ambient lights */}
+      <div className="absolute top-12 left-1/4 w-[500px] h-[500px] bg-rose-gold/15 rounded-full blur-[160px] pointer-events-none animate-pulse duration-[10000ms]" />
+      <div className="absolute bottom-10 right-10 w-[400px] h-[400px] bg-emerald-500/10 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/2 left-10 w-72 h-72 bg-copper/10 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 pb-16 border-b border-white/10">
           
           {/* Column 1: Brand & Bio */}
-          <div className="lg:col-span-5 space-y-6">
+          <div className="lg:col-span-5 space-y-8">
             <div className="flex flex-col sm:flex-row sm:items-center gap-4">
               {logoSrc && !imageError ? (
                 <div 
                   onClick={scrollToTop}
-                  className="cursor-pointer inline-flex p-2 bg-white/5 border border-white/10 rounded-[1.25rem] hover:border-rose-gold/40 transition-all duration-300"
+                  className="cursor-pointer inline-flex p-2.5 bg-white/[0.03] backdrop-blur-md border border-white/10 hover:border-rose-gold/50 hover:bg-white/[0.08] rounded-2xl hover:shadow-[0_0_20px_rgba(183,110,121,0.25)] transition-all duration-500"
                 >
                   <img 
                     id="site-footer-logo"
@@ -61,31 +81,31 @@ export default function Footer({ siteName, logoUrl, setView }: FooterProps) {
               ) : (
                 <span 
                   onClick={scrollToTop}
-                  className="font-serif text-3xl font-bold tracking-tight text-white cursor-pointer hover:text-rose-gold transition-colors duration-300"
+                  className="font-serif text-3xl font-bold tracking-tight text-white cursor-pointer hover:text-rose-gold hover:drop-shadow-[0_0_15px_rgba(183,110,121,0.5)] transition-all duration-300"
                 >
                   {siteName || "Setabgonj Online Home Delivery"}
                 </span>
               )}
               
               <div className="flex flex-col justify-center">
-                <span className="font-sans text-[10px] uppercase tracking-[0.35em] text-rose-gold font-black">
+                <span className="font-sans text-[10px] uppercase tracking-[0.35em] text-rose-gold font-black drop-shadow-[0_2px_5px_rgba(183,110,121,0.3)]">
                   {language === 'bn' ? 'মেহেদি ও ফ্যাশন' : 'Henna & Hue'}
                 </span>
                 <span className="text-[11px] text-white/40 font-mono mt-0.5">ESTD 2024</span>
               </div>
             </div>
 
-            <p className="text-white/70 text-base md:text-lg max-w-md leading-relaxed font-light">
+            <p className="text-white/80 text-base md:text-lg max-w-md leading-relaxed font-light">
               {t('footer.tagline')}
             </p>
 
-            {/* Rich Contacts Mini-Boxes */}
+            {/* Rich Contacts Mini-Boxes with Glassmorphic effects */}
             <div className="pt-4 space-y-4">
               <a 
-                href="tel:+8801830896222" 
-                className="group flex items-center gap-4 p-4 bg-white/[0.03] border border-white/5 hover:border-rose-gold/30 hover:bg-white/[0.06] rounded-2xl transition-all duration-300 w-full max-w-sm"
+                href={`tel:${(contactPhone || '+880 1830-896222').replace(/\s+/g, '')}`} 
+                className="group flex items-center gap-4 p-4 bg-white/[0.02] backdrop-blur-sm border border-white/5 hover:border-rose-gold/50 hover:bg-rose-gold/[0.05] rounded-2xl transition-all duration-300 w-full max-w-sm hover:shadow-[0_4px_20px_rgba(183,110,121,0.15)]"
               >
-                <div className="p-3 bg-rose-gold/10 group-hover:bg-rose-gold/20 rounded-xl text-rose-gold transition-colors duration-300">
+                <div className="p-3 bg-rose-gold/10 group-hover:bg-rose-gold/25 rounded-xl text-rose-gold transition-colors duration-300 shadow-[0_0_10px_rgba(183,110,121,0.2)]">
                   <Phone size={18} />
                 </div>
                 <div>
@@ -93,13 +113,13 @@ export default function Footer({ siteName, logoUrl, setView }: FooterProps) {
                     {language === 'bn' ? 'সরাসরি কল করুন' : 'Call Directly'}
                   </span>
                   <span className="text-base font-semibold group-hover:text-rose-gold transition-colors block">
-                    +880 1830-896222
+                    {contactPhone || "+880 1830-896222"}
                   </span>
                 </div>
               </a>
 
-              <div className="flex items-start gap-4 p-4 bg-white/[0.03] border border-white/5 rounded-2xl w-full max-w-sm">
-                <div className="p-3 bg-rose-gold/10 rounded-xl text-rose-gold">
+              <div className="flex items-start gap-4 p-4 bg-white/[0.02] backdrop-blur-sm border border-white/5 hover:border-emerald-500/30 hover:bg-emerald-500/[0.03] rounded-2xl transition-all duration-300 w-full max-w-sm hover:shadow-[0_4px_20px_rgba(4,74,34,0.15)]">
+                <div className="p-3 bg-rose-gold/10 rounded-xl text-rose-gold shadow-[0_0_10px_rgba(183,110,121,0.1)]">
                   <MapPin size={18} />
                 </div>
                 <div>
@@ -120,11 +140,11 @@ export default function Footer({ siteName, logoUrl, setView }: FooterProps) {
 
           {/* Column 2: Elegant Navigation & Quick Links */}
           <div className="lg:col-span-3 space-y-6 lg:pl-4">
-            <h4 className="font-serif text-xl font-medium tracking-wide text-white border-b border-rose-gold/20 pb-2 inline-block">
+            <h4 className="font-serif text-xl font-semibold tracking-wide text-white border-b-2 border-rose-gold/30 pb-2 inline-block">
               {t('footer.links')}
             </h4>
             
-            <ul className="space-y-3.5">
+            <ul className="space-y-4">
               {[
                 { label: language === 'bn' ? 'মূল পাতা' : 'Home', action: () => { setView?.('home'); scrollToTop(); } },
                 { label: language === 'bn' ? 'সেবাসমূহ' : 'Our Services', hash: 'products' },
@@ -166,7 +186,7 @@ export default function Footer({ siteName, logoUrl, setView }: FooterProps) {
 
           {/* Column 3: Redesigned Newsletter, Social & Connect Hub */}
           <div className="lg:col-span-4 space-y-6">
-            <h4 className="font-serif text-xl font-medium tracking-wide text-white border-b border-rose-gold/20 pb-2 inline-block">
+            <h4 className="font-serif text-xl font-semibold tracking-wide text-white border-b-2 border-rose-gold/30 pb-2 inline-block">
               {language === 'bn' ? 'যুক্ত থাকুন' : 'Stay Connected'}
             </h4>
             
@@ -178,7 +198,7 @@ export default function Footer({ siteName, logoUrl, setView }: FooterProps) {
 
             {/* Premium Subscribe Box */}
             <form onSubmit={handleSubscribe} className="relative group">
-              <div className="relative overflow-hidden rounded-2xl bg-white/[0.03] border border-white/10 group-focus-within:border-rose-gold/50 transition-all duration-300 p-1 flex">
+              <div className="relative overflow-hidden rounded-2xl bg-white/[0.02] backdrop-blur-sm border border-white/10 group-focus-within:border-rose-gold/60 group-focus-within:shadow-[0_0_20px_rgba(183,110,121,0.25)] transition-all duration-300 p-1 flex">
                 <input 
                   type="email" 
                   required
@@ -189,7 +209,7 @@ export default function Footer({ siteName, logoUrl, setView }: FooterProps) {
                 />
                 <button 
                   type="submit"
-                  className="bg-rose-gold hover:bg-rose-gold/80 hover:scale-105 active:scale-95 text-emerald-deep font-bold rounded-xl px-5 flex items-center justify-center gap-2 transition-all duration-300"
+                  className="bg-gradient-to-r from-rose-gold via-[#C87E89] to-copper hover:brightness-110 active:scale-95 text-white font-bold rounded-xl px-5 flex items-center justify-center gap-2 transition-all duration-300 shadow-md"
                 >
                   <Send size={15} />
                   <span className="text-xs uppercase tracking-wider hidden sm:inline">
@@ -208,35 +228,35 @@ export default function Footer({ siteName, logoUrl, setView }: FooterProps) {
               )}
             </form>
 
-            {/* Clean, Grid Social Networking Links */}
+             {/* Clean, Grid Social Networking Links */}
             <div className="pt-3">
-            <span className="block text-[10px] uppercase tracking-widest text-white/40 font-bold mb-3">
-              {language === 'bn' ? 'সামাজিক যোগাযোগ' : 'Social Platforms'}
-            </span>
-            <div className="flex gap-3">
-              <a 
-                href="https://facebook.com/brishtymou" 
-                target="_blank" 
-                rel="noreferrer" 
-                className="p-3 bg-white/[0.04] border border-white/5 hover:border-[#1877F2]/50 hover:bg-[#1877F2]/10 hover:text-[#1877F2] rounded-xl transition-all duration-300 text-white/80"
-                aria-label="Facebook"
-              >
-                <Facebook size={20} />
-              </a>
-              <a 
-                href="https://instagram.com" 
-                target="_blank" 
-                rel="noreferrer" 
-                className="p-3 bg-white/[0.04] border border-white/5 hover:border-[#E1306C]/50 hover:bg-[#E1306C]/10 hover:text-[#E1306C] rounded-xl transition-all duration-300 text-white/80"
-                aria-label="Instagram"
-              >
-                <Instagram size={20} />
-              </a>
-              <a 
-                href="mailto:hello@brishtys.com" 
-                className="p-3 bg-white/[0.04] border border-white/5 hover:border-rose-gold/50 hover:bg-rose-gold/10 hover:text-rose-gold rounded-xl transition-all duration-300 text-white/80"
-                aria-label="Email"
-              >
+              <span className="block text-[10px] uppercase tracking-widest text-white/40 font-bold mb-3">
+                {language === 'bn' ? 'সামাজিক যোগাযোগ' : 'Social Platforms'}
+              </span>
+              <div className="flex gap-3">
+                <a 
+                  href={socialFacebook || "https://facebook.com/brishtymou"} 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  className="p-3.5 bg-white/[0.03] backdrop-blur-sm border border-white/5 hover:border-[#1877F2] hover:bg-[#1877F2]/20 hover:text-[#1877F2] hover:scale-110 rounded-2xl transition-all duration-300 text-white/80 hover:shadow-[0_0_15px_rgba(24,119,242,0.3)]"
+                  aria-label="Facebook"
+                >
+                  <Facebook size={20} />
+                </a>
+                <a 
+                  href={socialInstagram || "https://instagram.com"} 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  className="p-3.5 bg-white/[0.03] backdrop-blur-sm border border-white/5 hover:border-[#E1306C] hover:bg-gradient-to-tr hover:from-[#FCAF45]/10 hover:via-[#E1306C]/10 hover:to-[#833AB4]/10 hover:text-[#E1306C] hover:scale-110 rounded-2xl transition-all duration-300 text-white/80 hover:shadow-[0_0_15px_rgba(225,48,108,0.3)]"
+                  aria-label="Instagram"
+                >
+                  <Instagram size={20} />
+                </a>
+                <a 
+                  href={`mailto:${contactEmail || "hello@brishtys.com"}`} 
+                  className="p-3.5 bg-white/[0.03] backdrop-blur-sm border border-white/5 hover:border-rose-gold hover:bg-rose-gold/20 hover:text-rose-gold hover:scale-110 rounded-2xl transition-all duration-300 text-white/80 hover:shadow-[0_0_15px_rgba(183,110,121,0.3)]"
+                  aria-label="Email"
+                >
                   <Mail size={20} />
                 </a>
               </div>
@@ -245,7 +265,7 @@ export default function Footer({ siteName, logoUrl, setView }: FooterProps) {
         </div>
 
         {/* Bottom Bar: Copyright and Extra Links */}
-        <div className="mt-12 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div className="mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="text-center md:text-left space-y-1">
             <p className="text-xs text-white/40 font-light">
               &copy; {new Date().getFullYear()} {siteName || "Setabgonj Online Home Delivery"}. {t('footer.rights')}
@@ -272,6 +292,15 @@ export default function Footer({ siteName, logoUrl, setView }: FooterProps) {
                 {language === 'bn' ? 'ব্যবহারের শর্তাবলী' : 'Terms of Service'}
               </button>
             </div>
+
+            {/* Back to Top Floating Button */}
+            <button
+              onClick={scrollToTop}
+              className="flex items-center justify-center w-11 h-11 rounded-full bg-rose-gold/10 hover:bg-rose-gold hover:text-white border border-rose-gold/30 text-rose-gold transition-all duration-300 hover:scale-110 shadow-[0_0_15px_rgba(183,110,121,0.15)] hover:shadow-[0_0_20px_rgba(183,110,121,0.4)] cursor-pointer group"
+              aria-label="Scroll to top"
+            >
+              <ArrowUp size={18} className="group-hover:-translate-y-1 transition-transform duration-300" />
+            </button>
           </div>
         </div>
       </div>

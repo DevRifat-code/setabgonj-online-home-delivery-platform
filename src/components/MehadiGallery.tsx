@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { getSupabase } from '../lib/supabase';
 import { useLanguage } from '../lib/LanguageContext';
 import Lightbox from './Lightbox';
+import LazyImage from './LazyImage';
 
 const DEFAULT_DESIGNS = [
   { img: '/assets/images/bridal_art_card_1778986446990.png', title: 'Intricate Bridal' },
@@ -73,7 +74,7 @@ export default function MehadiGallery() {
                 setIsLightboxOpen(true);
               }}
             >
-              <img 
+              <LazyImage 
                 src={design.img} 
                 alt={design.title} 
                 className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-110 group-hover:scale-100"

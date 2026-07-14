@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import ProductCard from './components/ProductCard';
+import Lightbox from './components/Lightbox';
 import CheckoutModal from './components/CheckoutModal';
 import Footer from './components/Footer';
 import WorkGallery from './components/WorkGallery';
@@ -62,6 +63,8 @@ export default function App() {
   const { t } = useLanguage();
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isProductLightboxOpen, setIsProductLightboxOpen] = useState(false);
+  const [activeProductIndex, setActiveProductIndex] = useState(0);
   const [view, setView] = useState<'home' | 'account' | 'privacy' | 'terms'>(() => {
     if (typeof window !== 'undefined') {
       const hash = window.location.hash;
@@ -149,7 +152,9 @@ export default function App() {
     contact_phone: "+880 1830-896222",
     hero_image_url: "",
     about_image_url: "",
-    booking_image_url: ""
+    booking_image_url: "",
+    social_instagram: "",
+    social_facebook: ""
   });
 
   const getTranslatedProductTitle = (title: string) => {
@@ -181,7 +186,9 @@ export default function App() {
             contact_phone: configData.contact_phone,
             hero_image_url: configData.hero_image_url || "",
             about_image_url: configData.about_image_url || "",
-            booking_image_url: configData.booking_image_url || ""
+            booking_image_url: configData.booking_image_url || "",
+            social_instagram: configData.social_instagram || "",
+            social_facebook: configData.social_facebook || ""
           });
         }
 
@@ -244,7 +251,14 @@ export default function App() {
           subtitle={finalHeroSubtitle}
         />
 
-        <section id="products" className="py-32 px-6">
+        <motion.section 
+          id="products" 
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="py-32 px-6"
+        >
           <div className="max-w-7xl mx-auto">
             <div className="mb-20 text-center">
               <span className="font-sans text-xs uppercase tracking-[0.4em] text-rose-gold font-bold mb-4 block">
@@ -272,18 +286,41 @@ export default function App() {
                     price={product.price}
                     type={product.type}
                     onOrder={() => setSelectedProduct(product.title)}
+                    onZoom={() => {
+                      setActiveProductIndex(index);
+                      setIsProductLightboxOpen(true);
+                    }}
                   />
                 );
               })}
             </div>
+
+            {/* Product Lightbox Overlay */}
+            <Lightbox
+              isOpen={isProductLightboxOpen}
+              onClose={() => setIsProductLightboxOpen(false)}
+              images={services.map(s => ({
+                src: s.image,
+                title: `${getTranslatedProductTitle(s.title)} - ${s.price || ''}`
+              }))}
+              currentIndex={activeProductIndex}
+              setCurrentIndex={setActiveProductIndex}
+            />
           </div>
-        </section>
+        </motion.section>
 
         <WorkGallery />
         
         <MehadiGallery />
 
-        <section id="booking" className="py-32 px-6 bg-warm-beige">
+        <motion.section 
+          id="booking" 
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="py-32 px-6 bg-warm-beige"
+        >
           <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16">
             <div className="flex-1">
               <div className="relative aspect-square max-w-lg mx-auto">
@@ -321,7 +358,7 @@ export default function App() {
               </div>
             </div>
           </div>
-        </section>
+        </motion.section>
 
         <About imageUrl={siteConfig.about_image_url} />
       </>
@@ -395,7 +432,14 @@ export default function App() {
         <TermsOfService onBack={() => setView('home')} />
       )}
 
-      <Footer siteName={siteConfig.site_name} logoUrl={siteConfig.logo_url} setView={setView} />
+      <Footer 
+        siteName={siteConfig.site_name} 
+        logoUrl={siteConfig.logo_url} 
+        setView={setView} 
+        socialInstagram={siteConfig.social_instagram}
+        socialFacebook={siteConfig.social_facebook}
+        contactEmail={siteConfig.contact_email}
+      />
 
       {(() => {
         const activeSvc = services.find(s => s.title === selectedProduct);

@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from 'motion/react';
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 
 interface HeroProps {
   imagePath: string;
@@ -13,6 +13,24 @@ export default function Hero({ imagePath, title, subtitle }: HeroProps) {
     target: containerRef,
     offset: ["start start", "end start"]
   });
+
+  // Preload critical hero LCP background image
+  useEffect(() => {
+    if (imagePath) {
+      const link = document.createElement('link');
+      link.rel = 'preload';
+      link.as = 'image';
+      link.href = imagePath;
+      document.head.appendChild(link);
+      return () => {
+        try {
+          document.head.removeChild(link);
+        } catch (e) {
+          // ignore
+        }
+      };
+    }
+  }, [imagePath]);
 
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.8], [0.8, 0.4]);

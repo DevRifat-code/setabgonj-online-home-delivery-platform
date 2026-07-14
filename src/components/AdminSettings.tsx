@@ -472,6 +472,19 @@ SELECT 'Custom Fusion', '/assets/images/tailoring_studio_1778986392437.png' WHER
                 </div>
               </div>
               <div>
+                <label className="text-xs font-bold text-emerald-deep/40 uppercase tracking-widest mb-2 block">Facebook Link</label>
+                <div className="relative">
+                  <Facebook className="absolute left-4 top-1/2 -translate-y-1/2 text-emerald-deep/20" size={18} />
+                  <input 
+                    type="text"
+                    value={config.social_facebook}
+                    onChange={e => setConfig({...config, social_facebook: e.target.value})}
+                    className="w-full pl-12 pr-6 py-3 bg-emerald-deep/5 border-none rounded-2xl focus:ring-2 focus:ring-rose-gold transition-all"
+                    placeholder="https://facebook.com/..."
+                  />
+                </div>
+              </div>
+              <div>
                 <ImageUploadField
                   label="About Portrait Image (পরিচিতি পাতার ছবি)"
                   value={config.about_image_url || ""}
